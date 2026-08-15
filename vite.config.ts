@@ -179,10 +179,11 @@ export default defineConfig({
     // Raises warning threshold (optional, e.g. set to 1000kB / 1MB)
     chunkSizeWarningLimit: 1000,
     // Bundler options for chunking
-    rolldownOptions: {
+    rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {
+            if (id.includes("lucide-react")) return "lucide-icons";
             if (id.includes("recharts") || id.includes("echarts") || id.includes("chart.js")) {
               return "chunk-admin-charts";
             }
@@ -190,17 +191,6 @@ export default defineConfig({
               return "vendor-react";
             }
             return "vendor";
-          }
-        },
-      },
-    },
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes("node_modules/lucide-react")) {
-            return "lucide-icons";
           }
         },
       },
